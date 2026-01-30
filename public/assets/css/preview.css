@@ -67,7 +67,6 @@ textarea {
         margin: 2cm;
     }
     body::before {
-        content: "MODUL PEMBELAJARAN";
         display: block;
         text-align: center;
         font-weight: bold;
