@@ -3,225 +3,371 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inggar - Lamaran Application Letter</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/preview.css') }}">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+
+    <!-- Vendor css (Require in all Page) -->
+    <link href="{{ asset('assets/css/vendor.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- Icons css (Require in all Page) -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- App css (Require in all Page) -->
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
     <style>
-        .elemen-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        body {
+            background-color: #f8f9fa;
         }
 
-        .elemen-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .preview-container,
+            .preview-container * {
+                visibility: visible;
+            }
+
+            .preview-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            .form-card,
+            .button-list,
+            .card-header,
+            .page-title-box {
+                display: none !important;
+            }
         }
 
-        .elemen-row input {
-            flex: 1;
-            padding: 8px 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .page-title-box {
+            padding: 30px 0 20px;
         }
 
-        .btn-remove {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 4px 6px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 10px;
-            width: 22px;
-            height: 28px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        .btn-remove:hover {
-            background-color: #c82333;
+        .preview-card {
+            background: white;
+            padding: 40px;
+            min-height: 800px;
         }
 
-        .btn-add {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 14px;
-            margin-top: 5px;
-            width: fit-content;
+        .preview-container {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
         }
 
-        .btn-add:hover {
-            background-color: #218838;
+        .preview-content {
+            margin-top: 30px;
         }
 
-        /* Button Styles */
-        .button-list {
-            display: flex;
-            gap: 10px;
-            flex-wrap: nowrap;
-            width: 100%;
+        .preview-content h5 {
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .button-list button {
-            flex: 1;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+        .preview-content p {
+            margin-bottom: 15px;
+            text-align: justify;
         }
 
-        #btnSimpan:hover {
-            background-color: #0056b3 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+        .signature-section {
+            margin-top: 50px;
         }
 
-        #btnPrint:hover {
-            background-color: #218838 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        .btn-action {
+            min-width: 120px;
         }
 
-        #btnClear:hover {
-            background-color: #c82333 !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .sticky-preview {
+            position: sticky;
+            top: 20px;
+        }
+
+        .container-custom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
     </style>
+
+    <!-- Theme Config js (Require in all Page) -->
+    <script src="{{ asset('assets/js/config.js') }}"></script>
 </head>
 
 <body>
 
-    <h3 class="title">Data Surat Lamaran</h3>
+    <div class="container-custom">
 
-    <div class="container">
+        <!-- Page Title -->
+        <div class="page-title-box">
+            <div class="d-flex align-items-center justify-content-between">
+                <h1 class="page-title">
+                    <iconify-icon icon="solar:document-text-bold-duotone" class="me-2"></iconify-icon>
+                    Data Surat Lamaran
+                </h1>
+                <button type="button" class="btn btn-soft-dark" id="light-dark-mode">
+                    <iconify-icon icon="solar:moon-bold-duotone" class="fs-20"></iconify-icon>
+                </button>
+            </div>
+            <p class="text-muted">Buat dan preview surat lamaran pekerjaan Anda</p>
+        </div>
 
-        <!--left form-->
-        <div class="left">
-            <div id="step-a" class="step">
-                <div class="form-group">
-                    <label>Kota & Tanggal</label>
-                    <input type="text" id="tanggal">
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-xl-6 col-lg-6">
+                <div class="card form-card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">
+                            <iconify-icon icon="solar:pen-bold-duotone" class="me-1"></iconify-icon>
+                            Form Data Surat Lamaran
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="lamaranForm">
+
+                            <!-- Kota & Tanggal -->
+                            <div class="mb-3">
+                                <label for="tanggal" class="form-label">Kota & Tanggal</label>
+                                <input type="text" class="form-control" id="tanggal">
+                            </div>
+
+                            <!-- Subjek Surat -->
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subjek Surat</label>
+                                <input type="text" class="form-control" id="subject">
+                            </div>
+
+                            <!-- Penerima & Alamat -->
+                            <div class="mb-3">
+                                <label for="penerima" class="form-label">Penerima & Alamat</label>
+                                <textarea class="form-control" id="penerima" rows="4"></textarea>
+                            </div>
+
+                            <!-- Paragraf 1 (Pembuka) -->
+                            <div class="mb-3">
+                                <label for="p1" class="form-label">Paragraf 1 (Pembuka)</label>
+                                <textarea class="form-control" id="p1" rows="3"></textarea>
+                            </div>
+
+                            <!-- Paragraf 2 (Isi) -->
+                            <div class="mb-3">
+                                <label for="p2" class="form-label">Paragraf 2 (Isi)</label>
+                                <textarea class="form-control" id="p2" rows="4"></textarea>
+                            </div>
+
+                            <!-- Paragraf 3 (Penutup) -->
+                            <div class="mb-3">
+                                <label for="p3" class="form-label">Paragraf 3 (Penutup)</label>
+                                <textarea class="form-control" id="p3" rows="3"></textarea>
+                            </div>
+
+                            <!-- Nama Penyusun -->
+                            <div class="mb-4">
+                                <label for="nama_penyusun" class="form-label">Nama Penyusun</label>
+                                <input type="text" class="form-control" id="nama_penyusun">
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary btn-lg" id="btnSimpan">
+                                    <i class="bx bx-save me-1"></i> Simpan Surat
+                                </button>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-success w-100" id="btnPrint">
+                                            <i class="bx bx-printer me-1"></i> Cetak PDF
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-danger w-100" id="btnClear">
+                                            <i class="bx bx-trash me-1"></i> Clear
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Subjek Surat</label>
-                    <input type="text" id="subject">
-                </div>
+            <!-- Preview Column -->
+            <div class="col-xl-6 col-lg-6">
+                <div class="card sticky-preview">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">
+                            <iconify-icon icon="solar:eye-bold-duotone" class="me-1"></iconify-icon>
+                            Preview Surat Lamaran
+                        </h4>
+                    </div>
+                    <div class="card-body preview-card">
+                        <div class="preview-container">
 
-                <div class="form-group">
-                    <label>Penerima & Alamat</label>
-                    <textarea id="penerima"></textarea>
-                </div>
+                            <!-- Header -->
+                            <div class="text-center mb-3">
+                                <h2 style="font-size: 24px; font-weight: bold; color: #2c3e50;">
+                                    <span id="p-fase">JOB APPLICATION LETTER</span>
+                                </h2>
+                                <hr style="border: 1px solid #3498db; width: 60%; margin: 10px auto;">
+                            </div>
 
-                <div class="form-group">
-                    <label>Parapraf 1 (Pembuka)</label>
-                    <textarea id="p1"></textarea>
-                </div>
+                            <div class="mb-4">
+                                <p><span id="p-tanggal">Bandung, 30 Januari 2026</span></p>
+                            </div>
 
-                <div class="form-group">
-                    <label>Paragraf 2 (Isi)</label>
-                    <textarea id="p2"></textarea>
-                </div>
+                            <!-- Subject -->
+                            <div class="preview-content">
+                                <h5><span id="p-subject">Subject Job Application</span></h5>
 
-                <div class="form-group">
-                    <label>Paragraf 3 (Penutup)</label>
-                    <textarea id="p3"></textarea>
-                </div>
+                                <!-- Recipient -->
+                                <p>Dear,</p>
+                                <p>
+                                    <span id="p-penerima">
+                                        HRD PT. Budiman<br>
+                                        Jl. Sudirman No 123<br>
+                                        Jakarta Pusat
+                                    </span>
+                                </p>
 
+                                <br>
 
-                <div class="form-group mb-3">
-                    <label>Nama Penyusun</label>
-                    <input type="text" id="nama_penyusun">
-                </div>
+                                <!-- Salutation -->
+                                <p><strong>Dear Sir/Madam,</strong></p>
 
-                <div class="form-sections mb-3">
-                    <div class="button-list">
-                        <button type="button" class="btn btn-primary" id="btnSimpan" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">Simpan Surat</button>
-                        <button type="button" class="btn btn-success" id="btnPrint" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">Cetak Surat (PDF)</button>
-                        <button type="button" class="btn btn-danger" id="btnClear" style="background-color: #dc3535; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">Clear</button>
+                                <!-- Paragraph 1 -->
+                                <p><span id="p-p1">Dengan hormat, saya membuat surat lamaran ini untuk mengajukan diri sebagai kandidat pada posisi yang tersedia di perusahaan Bapak/Ibu pimpin.</span></p>
+
+                                <!-- Paragraph 2 -->
+                                <p><span id="p-p2">Dengan pengalaman dan keahlian yang saya miliki, saya yakin dapat memberikan kontribusi positif bagi perusahaan. Saya memiliki motivasi yang tinggi untuk berkembang dan belajar hal-hal baru.</span></p>
+
+                                <!-- Paragraph 3 -->
+                                <p><span id="p-p3">Demikian surat lamaran ini saya buat dengan sebenar-benarnya. Besar harapan saya untuk dapat diterima di perusahaan yang Bapak/Ibu pimpin. Atas perhatian dan kesempatannya, saya ucapkan terima kasih.</span></p>
+
+                                <br>
+
+                                <!-- Signature -->
+                                <div class="signature-section">
+                                    <p>Hormat Saya,</p>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p><strong><span id="p-nama_penyusun">Inggar Nugraha P</span></strong></p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- End Row -->
 
-        <!--right preview -->
-        <div class="right">
-
-            <div class="info-header">
-                <img id="p-logo" class="logo" style="display:none;">
-
-                <div class="info-text">
-                    <h2><span id="p-fase">JOB APPLICATION LETTER</span></h2>
-                    <hr>
-                    <p><span id="p-tanggal">Bandung, 30 Januari 2026</span></p>
-                </div>
-            </div>
-
-            <h5><span id="p-subject"> Subject Job Applicatian</span></h5>
-            <p>Dear,</p>
-            <p>
-                <span id="p-penerima">
-                    HRD PT. Budiman
-                    <br>
-                    Jl. Sudirman No 123
-                    <br>
-                    Jakarta Pusat
-                </span>
+        <!-- Footer -->
+        <div class="text-center py-4 mt-4">
+            <p class="text-muted mb-0">
+                <script>
+                    document.write(new Date().getFullYear())
+                </script> &copy; Sistem Surat Lamaran
             </p>
-            <br>
-            <p>dear</p>
-            <p><span id="p-p1">dengan hormat saya membuat surat lamaran ini.</span></p>
-            <p><span id="p-p2">dengan surat ini saya ingin melamar di divisi.</span></p>
-            <p><span id="p-p3">semoga saya bisa di terima disini.</span></p>
-            <br>
-            <br>
-            <p>Hormat Saya,</p>
-            <br>
-            <br>
-            <br>
-            <b><span id="p-nama_penyusun">Inggar Nugraha P</span></b>
         </div>
 
-
     </div>
-    <!--js bagian print/cetak pdf-->
+
+    <!-- Vendor Javascript (Require in all Page) -->
+    <script src="{{ asset('assets/js/vendor.js') }}"></script>
+
+    <!-- App Javascript (Require in all Page) -->
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    <!-- Custom JavaScript for Live Preview -->
     <script>
-        document.getElementById("btnPrint").addEventListener("click", () => {
+        // Live Preview Update
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Function to update preview
+            function updatePreview(inputId, previewId, isHtml = false) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+
+                input.addEventListener('input', function() {
+                    if (isHtml) {
+                        preview.innerHTML = this.value.replace(/\n/g, '<br>');
+                    } else {
+                        preview.textContent = this.value || preview.textContent;
+                    }
+                });
+            }
+
+            // Setup all live preview bindings
+            updatePreview('tanggal', 'p-tanggal');
+            updatePreview('subject', 'p-subject');
+            updatePreview('penerima', 'p-penerima', true);
+            updatePreview('p1', 'p-p1');
+            updatePreview('p2', 'p-p2');
+            updatePreview('p3', 'p-p3');
+            updatePreview('nama_penyusun', 'p-nama_penyusun');
+
+        });
+
+        // Print Button Handler
+        document.getElementById("btnPrint").addEventListener("click", function() {
             window.print();
         });
-    </script>
-    <!--js bagian clear-->
-    <script>
-        document.getElementById("btnClear").addEventListener("click", () => {
+
+        // Clear Button Handler
+        document.getElementById("btnClear").addEventListener("click", function() {
             if (confirm("Apakah Anda yakin ingin menghapus semua data?")) {
+                // Clear all text inputs
                 document.querySelectorAll("input[type='text']").forEach(input => {
                     input.value = "";
                 });
 
+                // Clear all textareas
                 document.querySelectorAll("textarea").forEach(textarea => {
                     textarea.value = "";
                 });
 
+                // Reset preview to default values
                 document.getElementById("p-tanggal").textContent = "Bandung, 30 Januari 2026";
-                document.getElementById("p-subject").textContent = " Subject Job Applicatian";
+                document.getElementById("p-subject").textContent = "Subject Job Application";
                 document.getElementById("p-penerima").innerHTML = "HRD PT. Budiman<br>Jl. Sudirman No 123<br>Jakarta Pusat";
-                document.getElementById("p-p1").textContent = "dengan hormat saya membuat surat lamaran ini.";
-                document.getElementById("p-p2").textContent = "dengan surat ini saya ingin melamar di divisi.";
-                document.getElementById("p-p3").textContent = "semoga saya bisa di terima disini.";
+                document.getElementById("p-p1").textContent = "Dengan hormat, saya membuat surat lamaran ini untuk mengajukan diri sebagai kandidat pada posisi yang tersedia di perusahaan Bapak/Ibu pimpin.";
+                document.getElementById("p-p2").textContent = "Dengan pengalaman dan keahlian yang saya miliki, saya yakin dapat memberikan kontribusi positif bagi perusahaan. Saya memiliki motivasi yang tinggi untuk berkembang dan belajar hal-hal baru.";
+                document.getElementById("p-p3").textContent = "Demikian surat lamaran ini saya buat dengan sebenar-benarnya. Besar harapan saya untuk dapat diterima di perusahaan yang Bapak/Ibu pimpin. Atas perhatian dan kesempatannya, saya ucapkan terima kasih.";
                 document.getElementById("p-nama_penyusun").textContent = "Inggar Nugraha P";
 
+                // Show success message
                 alert("Data berhasil dihapus!");
             }
         });
+
+        // Save Button Handler
+        document.getElementById("btnSimpan").addEventListener("click", function() {
+            // Here you can add AJAX call to save data to server
+            // For now, just show a notification
+            alert("Data surat berhasil disimpan!");
+        });
     </script>
-    <script src="{{ asset('assets/js/preview.js') }}"></script>
+
 </body>
 
 </html>
