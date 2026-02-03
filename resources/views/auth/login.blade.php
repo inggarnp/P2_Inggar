@@ -45,7 +45,7 @@
                                     </div>
 
                                     <div class="mb-1 text-center d-grid">
-                                        <button class="btn btn-soft-primary" type="submit">Sign In</button>
+                                        <a href="{{ route('dashboard') }}" class="btn btn-soft-primary">Sign In</a>
                                     </div>
                                 </form>
 

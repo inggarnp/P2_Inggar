@@ -11,9 +11,15 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/lamaran', function () {
-    return view('lamaran');
+    return view('pages.lamaran');
 })->name('lamaran');
 
+// Route Dashboard - Ini route utama untuk dashboard
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->name('dashboard');
+
+// Redirect root ke login
 Route::get('/', function () {
-    return view('lamaran');
+    return redirect()->route('login');
 });
