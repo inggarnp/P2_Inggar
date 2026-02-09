@@ -26,16 +26,23 @@
 
                             <p class="text-muted mt-1 mb-4">Enter your email address and password to access admin panel.</p>
 
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    {{ $errors->first() }}
+                                </div>
+                            @endif
+
                             <div class="mb-5">
-                                <form action="https://techzaa.in/larkon/admin/index.html" class="authentication-form">
+                                <form action="{{ route('login.post') }}" method="POST" class="authentication-form">
+                                    @csrf
                                     <div class="mb-3">
                                         <label class="form-label" for="example-email">Email</label>
-                                        <input type="email" id="example-email" name="example-email" class="form-control bg-" placeholder="Enter your email">
+                                        <input type="email" id="example-email" name="email" class="form-control bg-" placeholder="Enter your email" value="{{ old('email') }}" required>
                                     </div>
                                     <div class="mb-3">
                                         <a href="auth-password.html" class="float-end text-muted text-unline-dashed ms-1">Reset password</a>
                                         <label class="form-label" for="example-password">Password</label>
-                                        <input type="text" id="example-password" class="form-control" placeholder="Enter your password">
+                                        <input type="password" id="example-password" name="password" class="form-control" placeholder="Enter your password" required>
                                     </div>
                                     <div class="mb-3">
                                         <div class="form-check">
@@ -45,7 +52,7 @@
                                     </div>
 
                                     <div class="mb-1 text-center d-grid">
-                                        <a href="{{ route('dashboard') }}" class="btn btn-soft-primary">Sign In</a>
+                                        <button type="submit" class="btn btn-soft-primary">Sign In</button>
                                     </div>
                                 </form>
 

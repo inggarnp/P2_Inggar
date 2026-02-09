@@ -198,9 +198,17 @@
 @endsection
 
 @push('scripts')
-<!-- Chart JS jika diperlukan -->
 <script src="{{ asset('assets/js/vendor/apexcharts.min.js') }}"></script>
 <script>
-    // Script untuk chart performance jika diperlukan
 </script>
+
+@if(session('jwt_token'))
+<script>
+    localStorage.setItem('jwt_token', '{{ session("jwt_token") }}');
+    localStorage.setItem('user', '{!! json_encode(session("user_data")) !!}');
+
+    console.log('Token saved to localStorage');
+    console.log('Token:', localStorage.getItem('jwt_token'));
+</script>
+@endif
 @endpush

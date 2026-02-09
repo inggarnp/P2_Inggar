@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <p class="mb-0 fw-semibold">Jacob Gines</p>
-                                        <p class="mb-0 text-wrap">Answered to your comment on the cash flow forecast's graph 🔔.</p>
+                                        <p class="mb-0 text-wrap">Answered to your comment on the cash flow forecast's graph 📉.</p>
                                     </div>
                                 </div>
                             </a>
@@ -130,10 +130,15 @@
                             <i class="bx bx-lock text-muted fs-18 align-middle me-1"></i><span class="align-middle">Lock screen</span>
                         </a>
                         <div class="dropdown-divider my-1"></div>
-                        <a class="dropdown-item text-danger" href="{{ route('login') }}">
+                        
+                        <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); handleLogout();">
                             <i class="bx bx-log-out fs-18 align-middle me-1"></i>
                             <span class="align-middle">Logout</span>
                         </a>
+                        
+                        <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>
@@ -141,3 +146,13 @@
     </div>
 </header>
 <!-- ========== Topbar End ========== -->
+
+<script>
+function handleLogout() {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('user');
+    console.log('🗑️ Token removed from localStorage');
+    
+    document.getElementById('logoutForm').submit();
+}
+</script>
