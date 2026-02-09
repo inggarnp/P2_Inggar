@@ -38,7 +38,10 @@ class AuthController extends Controller
             'user' => $user
         ]);
 
-        return redirect()->route('dashboard')->with([
+        $intended = session('intended', route('dashboard'));
+        session()->forget('intended');
+
+        return redirect($intended)->with([
             'jwt_token' => $token,
             'user_data' => $user
         ]);
@@ -47,17 +50,17 @@ class AuthController extends Controller
     public function logoutWeb(Request $request)
     {
         $token = session('token');
-        
+
         if ($token) {
             try {
                 JWTAuth::setToken($token)->invalidate();
             } catch (\Exception $e) {
             }
         }
-        
+
         session()->forget(['token', 'user']);
         session()->flush();
-        
+
         return redirect()->route('login')->with('success', 'Logout berhasil');
     }
 }
