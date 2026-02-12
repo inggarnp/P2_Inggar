@@ -31,6 +31,8 @@ class AuthController extends Controller
                 ->withInput();
         }
 
+        $user->load('jabatan');
+
         $token = JWTAuth::fromUser($user);
 
         session([
@@ -38,10 +40,15 @@ class AuthController extends Controller
             'user' => $user
         ]);
 
-        $intended = session('intended', route('dashboard'));
-        session()->forget('intended');
+        $redirectRoute = match ($user->jabatan->slug) {
+            'administrator'  => 'dashboard.admin',
+            'kepala_lurah'   => 'dashboard.lurah',
+            'sekre_lurah'    => 'dashboard.sekre',
+            'staff_pelayanan' => 'dashboard.staff',
+            default          => 'dashboard.admin'
+        };
 
-        return redirect($intended)->with([
+        return redirect()->route($redirectRoute)->with([
             'jwt_token' => $token,
             'user_data' => $user
         ]);

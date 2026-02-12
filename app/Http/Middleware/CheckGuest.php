@@ -12,12 +12,13 @@ class CheckGuest
     public function handle(Request $request, Closure $next): Response
     {
         $token = session('token');
+
         if ($token) {
             try {
                 $user = JWTAuth::setToken($token)->authenticate();
-                
+
                 if ($user) {
-                    return redirect()->route('dashboard');
+                    return redirect('/');
                 }
             } catch (\Exception $e) {
                 session()->forget(['token', 'user']);

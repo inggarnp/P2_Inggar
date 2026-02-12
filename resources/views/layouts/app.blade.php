@@ -9,6 +9,7 @@
     <meta name="description" content="A fully responsive premium admin dashboard template" />
     <meta name="author" content="Techzaa" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -79,6 +80,17 @@
 
     <!-- App Javascript (Require in all Page) -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    {{-- Simpan JWT token ke localStorage setelah login (berlaku semua role) --}}
+    @if(session('jwt_token'))
+    <script>
+        localStorage.setItem('jwt_token', '{{ session("jwt_token") }}');
+        localStorage.setItem('user', '{!! json_encode(session("user_data")) !!}');
+        console.log('Token saved to localStorage');
+        console.log('Token:', localStorage.getItem('jwt_token'));
+        console.log('User:', JSON.parse(localStorage.getItem('user')));
+    </script>
+    @endif
 
     @stack('scripts')
 

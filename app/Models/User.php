@@ -11,7 +11,6 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'jabatan_id',
-        'remember_token',
     ];
 
     protected $hidden = [
@@ -36,5 +35,10 @@ class User extends Authenticatable implements JWTSubject
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id');
     }
 }

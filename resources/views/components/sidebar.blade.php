@@ -1,13 +1,24 @@
+@php
+$jabatan = session('user') ? session('user')->jabatan->slug : null;
+
+$dashboardRoute = match($jabatan) {
+'administrator' => route('dashboard.admin'),
+'kepala_lurah' => route('dashboard.lurah'),
+'sekre_lurah' => route('dashboard.sekre'),
+'staff_pelayanan' => route('dashboard.staff'),
+default => route('login')
+};
+@endphp
+
 <!-- ========== App Menu Start ========== -->
 <div class="main-nav">
     <!-- Sidebar Logo -->
     <div class="logo-box">
-        <a href="{{ route('dashboard') }}" class="logo-dark">
+        <a href="{{ $dashboardRoute }}" class="logo-dark">
             <img src="{{ asset('assets/images/logo-sm.png') }}" class="logo-sm" alt="logo sm">
             <img src="{{ asset('assets/images/logo-dark.png') }}" class="logo-lg" alt="logo dark">
         </a>
-
-        <a href="{{ route('dashboard') }}" class="logo-light">
+        <a href="{{ $dashboardRoute }}" class="logo-light">
             <img src="{{ asset('assets/images/logo-sm.png') }}" class="logo-sm" alt="logo sm">
             <img src="{{ asset('assets/images/logo-light.png') }}" class="logo-lg" alt="logo light">
         </a>
@@ -23,8 +34,9 @@
 
             <li class="menu-title">General</li>
 
+            {{-- ==================== DASHBOARD ==================== --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link" href="{{ $dashboardRoute }}">
                     <span class="nav-icon">
                         <iconify-icon icon="solar:widget-5-bold-duotone"></iconify-icon>
                     </span>
@@ -32,120 +44,123 @@
                 </a>
             </li>
 
+            {{-- ==================== ADMIN ONLY ==================== --}}
+            @if($jabatan === 'administrator')
+
             <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarProducts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProducts">
+                <a class="nav-link menu-arrow" href="#sidebarUsers" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUsers">
                     <span class="nav-icon">
-                        <iconify-icon icon="solar:t-shirt-bold-duotone"></iconify-icon>
+                        <iconify-icon icon="solar:users-group-two-rounded-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Products </span>
+                    <span class="nav-text"> Manajemen Users </span>
                 </a>
-                <div class="collapse" id="sidebarProducts">
+                <div class="collapse" id="sidebarUsers">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Grid</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Details</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Edit</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Create</a>
+                            <a class="sub-nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
                     </ul>
                 </div>
             </li>
 
+            @endif
+
+            {{-- ==================== ADMIN & SEKRE ==================== --}}
+            @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
+
             <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarCategory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCategory">
+                <a class="nav-link menu-arrow" href="#sidebarSurat" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSurat">
                     <span class="nav-icon">
                         <iconify-icon icon="solar:clipboard-list-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Category </span>
+                    <span class="nav-text"> Kelola Surat </span>
                 </a>
-                <div class="collapse" id="sidebarCategory">
+                <div class="collapse" id="sidebarSurat">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List</a>
-                        </li>                         
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Edit</a>
+                            <a class="sub-nav-link" href="#">List Surat</a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Create</a>
+                            <a class="sub-nav-link" href="#">Buat Surat</a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            @endif
+
+            {{-- ==================== ADMIN, SEKRE & KEPALA LURAH ==================== --}}
+            @if(in_array($jabatan, ['administrator', 'sekre_lurah', 'kepala_lurah']))
 
             <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarInventory" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarInventory">
+                <a class="nav-link menu-arrow" href="#sidebarArsip" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarArsip">
                     <span class="nav-icon">
-                        <iconify-icon icon="solar:box-bold-duotone"></iconify-icon>
+                        <iconify-icon icon="solar:folder-with-files-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Inventory </span>
+                    <span class="nav-text"> Arsip Surat </span>
                 </a>
-                <div class="collapse" id="sidebarInventory">
+                <div class="collapse" id="sidebarArsip">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Warehouse</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Received Orders</a>
+                            <a class="sub-nav-link" href="#">Lihat Arsip</a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            @endif
+
+            {{-- ==================== ADMIN, SEKRE & STAFF PELAYANAN ==================== --}}
+            @if(in_array($jabatan, ['administrator', 'sekre_lurah', 'staff_pelayanan']))
 
             <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarOrders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrders">
+                <a class="nav-link menu-arrow" href="#sidebarWarga" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarWarga">
                     <span class="nav-icon">
-                        <iconify-icon icon="solar:bag-smile-bold-duotone"></iconify-icon>
+                        <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Orders </span>
+                    <span class="nav-text"> Manajamen Warga </span>
                 </a>
-                <div class="collapse" id="sidebarOrders">
+                <div class="collapse" id="sidebarWarga">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List</a>
+                            <a class="sub-nav-link" href="{{ route('rukun.index') }}"> Rukun </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Details</a>
+                            <a class="sub-nav-link" href="{{ route('rukun.index') }}"> Keluarga </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Cart</a>
+                            <a class="sub-nav-link" href="#">List Warga</a>
+                        </li>
+                        @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="#">Tambah Warga</a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Check Out</a>
+                            <a class="sub-nav-link" href="#">Import Warga</a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </li>
 
+            @endif
+
+            {{-- ==================== STAFF PELAYANAN ==================== --}}
+            @if($jabatan === 'staff_pelayanan')
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span class="nav-icon">
+                        <iconify-icon icon="solar:file-add-bold-duotone"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Buat Surat </span>
+                </a>
+            </li>
+
+            @endif
+
+            {{-- ==================== SEMUA ROLE ==================== --}}
             <li class="menu-title mt-2">Other</li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarCoupons" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCoupons">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:leaf-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Coupons </span>
-                </a>
-                <div class="collapse" id="sidebarCoupons">
-                    <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Add</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('lamaran') }}">
@@ -153,44 +168,6 @@
                         <iconify-icon icon="solar:chat-square-like-bold-duotone"></iconify-icon>
                     </span>
                     <span class="nav-text"> Form Lamaran Kerja </span>
-                </a>
-            </li>
-
-            <li class="menu-title mt-2">Other Apps</li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:chat-round-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Chat </span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:mailbox-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Email </span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:calendar-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Calendar </span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:checklist-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Todo </span>
                 </a>
             </li>
 

@@ -55,16 +55,7 @@
                                         <button type="submit" class="btn btn-soft-primary">Sign In</button>
                                     </div>
                                 </form>
-
-                                <p class="mt-3 fw-semibold no-span">OR sign with</p>
-
-                                <div class="d-grid gap-2">
-                                    <a href="javascript:void(0);" class="btn btn-soft-dark"><i class="bx bxl-google fs-20 me-1"></i> Sign in with Google</a>
-                                    <a href="javascript:void(0);" class="btn btn-soft-primary"><i class="bx bxl-facebook fs-20 me-1"></i> Sign in with Facebook</a>
-                                </div>
                             </div>
-
-                            <p class="text-danger text-center">Don't have an account? <a href="{{ route('register') }}" class="text-dark fw-bold ms-1">Sign Up</a></p>
                         </div>
                     </div>
                 </div>
