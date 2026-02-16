@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RukunController;
+use App\Http\Controllers\WargaController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\DashboardController;
 
 //guest route
@@ -33,6 +35,24 @@ Route::middleware(['auth.check'])->group(function () {
         Route::get('/rukun/{id}', [RukunController::class, 'show'])->name('rukun.show');
         Route::put('/rukun/{id}', [RukunController::class, 'update'])->name('rukun.update');
         Route::delete('/rukun/{id}', [RukunController::class, 'destroy'])->name('rukun.destroy');
+
+        //warga
+        Route::get('/warga', [WargaController::class, 'index'])->name('warga.index');
+        Route::post('/warga', [WargaController::class, 'store'])->name('warga.store');
+        Route::get('/warga/{id}', [WargaController::class, 'show'])->name('warga.show');
+        Route::put('/warga/{id}', [WargaController::class, 'update'])->name('warga.update');
+        Route::delete('/warga/{id}', [WargaController::class, 'destroy'])->name('warga.destroy');
+
+        Route::get('/warga/import/template', [WargaController::class, 'downloadTemplate'])->name('warga.import.template');
+        Route::post('/warga/import', [WargaController::class, 'import'])->name('warga.import');
+
+
+        //family
+        Route::get('/family', [FamilyController::class, 'index'])->name('family.index');
+        Route::post('/family', [FamilyController::class, 'store'])->name('family.store');
+        Route::get('/family/{id}', [FamilyController::class, 'show'])->name('family.show');
+        Route::put('/family/{id}', [FamilyController::class, 'update'])->name('family.update');
+        Route::delete('/family/{id}', [FamilyController::class, 'destroy'])->name('family.destroy');
     });
 
     //dashboard lurah

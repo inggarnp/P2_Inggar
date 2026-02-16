@@ -126,10 +126,10 @@ default => route('login')
                             <a class="sub-nav-link" href="{{ route('rukun.index') }}"> Rukun </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('rukun.index') }}"> Keluarga </a>
+                            <a class="sub-nav-link" href="{{ route('warga.index') }}"> Warga </a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List Warga</a>
+                            <a class="sub-nav-link" href="{{ route('family.index') }}"> Keluarga </a>
                         </li>
                         @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
                         <li class="sub-nav-item">
