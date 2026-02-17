@@ -163,11 +163,11 @@ default => route('login')
             <li class="menu-title mt-2">Other</li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('lamaran') }}">
+                <a class="nav-link" href="{{ route('lurah_config.index') }}">
                     <span class="nav-icon">
                         <iconify-icon icon="solar:chat-square-like-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Form Lamaran Kerja </span>
+                    <span class="nav-text"> Profil Kelurahan </span>
                 </a>
             </li>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RukunController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\LurahConfigController;
 use App\Http\Controllers\DashboardController;
 
 //guest route
@@ -53,6 +54,9 @@ Route::middleware(['auth.check'])->group(function () {
         Route::get('/family/{id}', [FamilyController::class, 'show'])->name('family.show');
         Route::put('/family/{id}', [FamilyController::class, 'update'])->name('family.update');
         Route::delete('/family/{id}', [FamilyController::class, 'destroy'])->name('family.destroy');
+
+        Route::get('/lurah-config', [LurahConfigController::class, 'index'])->name('lurah_config.index');
+        Route::post('/lurah-config/save', [LurahConfigController::class, 'save'])->name('lurah_config.save');
     });
 
     //dashboard lurah
