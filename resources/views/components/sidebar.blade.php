@@ -66,7 +66,7 @@ default => route('login')
             @endif
 
             {{-- ==================== ADMIN & SEKRE ==================== --}}
-            @if(in_array($jabatan, ['administrator', 'sekre_lurah', 'staff_pelayanan']))
+            @if(in_array($jabatan, ['administrator', 'staff_pelayanan']))
 
             <li class="nav-item">
                 <a class="nav-link menu-arrow" href="#sidebarSurat" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSurat">
@@ -120,7 +120,7 @@ default => route('login')
             @endif
 
             {{-- ==================== ADMIN, SEKRE & STAFF PELAYANAN ==================== --}}
-            @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
+            @if(in_array($jabatan, ['administrator', 'kepala_lurah' ,'sekre_lurah']))
 
             <li class="nav-item">
                 <a class="nav-link menu-arrow" href="#sidebarWarga" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarWarga">
