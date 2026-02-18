@@ -21,7 +21,6 @@
 
             <div class="card-body p-4">
 
-                {{-- Alert sukses setelah update --}}
                 <div id="alertBox" class="d-none mb-4"></div>
 
                 <div class="row align-items-start">
@@ -85,6 +84,28 @@
                                     <span class="fw-semibold">{{ $config->pos_code }}</span>
                                 </div>
                             </div>
+                            {{-- NEW: Alamat --}}
+                            @if($config->address)
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded" style="background:#f8f9fa;">
+                                    <small class="text-muted d-block mb-1">
+                                        <i class="bx bx-home me-1"></i>Alamat Kantor
+                                    </small>
+                                    <span class="fw-semibold">{{ $config->address }}</span>
+                                </div>
+                            </div>
+                            @endif
+                            {{-- NEW: Kontak --}}
+                            @if($config->contact)
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded" style="background:#f8f9fa;">
+                                    <small class="text-muted d-block mb-1">
+                                        <i class="bx bx-phone me-1"></i>Telepon / Email
+                                    </small>
+                                    <span class="fw-semibold">{{ $config->contact }}</span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -124,6 +145,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('modal_city').value     = @json($config->city);
         document.getElementById('modal_district').value = @json($config->district);
         document.getElementById('modal_pos_code').value = @json($config->pos_code);
+        // NEW: populate address & contact
+        document.getElementById('modal_address').value  = @json($config->address ?? '');
+        document.getElementById('modal_contact').value  = @json($config->contact ?? '');
 
         const preview = document.getElementById('modalLogoPreview');
         const icon    = document.getElementById('modalLogoIcon');
@@ -141,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('modalTitleText').textContent = 'Edit Profil Kelurahan';
     });
     @else
-
     document.getElementById('modalTitleText').textContent = 'Isi Profil Kelurahan';
     @endif
 
@@ -183,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (data.success) {
                 bootstrap.Modal.getInstance(document.getElementById('saveLurahModal')).hide();
-
                 setTimeout(() => window.location.reload(), 300);
             } else {
                 errorDiv.textContent = data.message || 'Terjadi kesalahan';

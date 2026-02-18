@@ -65,6 +65,18 @@
                                         placeholder="40286" maxlength="10">
                                 </div>
                             </div>
+                            {{-- NEW: Alamat --}}
+                            <div class="mb-3">
+                                <label class="form-label">Alamat Kantor</label>
+                                <input type="text" class="form-control" id="modal_address" name="address"
+                                    placeholder="contoh: Jl. Cikadut No. 1 Bandung">
+                            </div>
+                            {{-- NEW: Kontak --}}
+                            <div class="mb-3">
+                                <label class="form-label">No. Telepon / Email</label>
+                                <input type="text" class="form-control" id="modal_contact" name="contact"
+                                    placeholder="contoh: (022) 1234567 / kelurahan@gmail.com">
+                            </div>
                         </div>
                     </div>
                 </div>

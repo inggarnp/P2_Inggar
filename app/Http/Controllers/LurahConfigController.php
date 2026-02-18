@@ -28,6 +28,8 @@ class LurahConfigController extends Controller
             'city'     => 'required|string|max:255',
             'district' => 'required|string|max:255',
             'pos_code' => 'required|string|max:10',
+            'address'  => 'nullable|string|max:500',
+            'contact'  => 'nullable|string|max:255',
             'logo'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'name.required'     => 'Nama kelurahan wajib diisi',
@@ -41,7 +43,7 @@ class LurahConfigController extends Controller
         ]);
 
         try {
-            $data     = $request->only(['name', 'province', 'city', 'district', 'pos_code']);
+            $data     = $request->only(['name', 'province', 'city', 'district', 'pos_code', 'address', 'contact']);
             $existing = $this->repo->get();
 
             if ($request->hasFile('logo')) {

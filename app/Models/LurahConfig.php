@@ -14,6 +14,8 @@ class LurahConfig extends Model
         'city',
         'district',
         'pos_code',
+        'address',
+        'contact',
         'logo',
     ];
 }

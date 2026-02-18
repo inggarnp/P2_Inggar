@@ -66,22 +66,31 @@ default => route('login')
             @endif
 
             {{-- ==================== ADMIN & SEKRE ==================== --}}
-            @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
+            @if(in_array($jabatan, ['administrator', 'sekre_lurah', 'staff_pelayanan']))
 
             <li class="nav-item">
                 <a class="nav-link menu-arrow" href="#sidebarSurat" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSurat">
                     <span class="nav-icon">
                         <iconify-icon icon="solar:clipboard-list-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Kelola Surat </span>
+                    <span class="nav-text"> Buat Surat </span>
                 </a>
                 <div class="collapse" id="sidebarSurat">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">List Surat</a>
+                            <a class="sub-nav-link" href="{{ route('sktm.index') }}">Surat Keterangan Tidak Mampu</a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Buat Surat</a>
+                            <a class="sub-nav-link" href="{{ route('domisili.index') }}">Surat Keterangan Domisili</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('akte_kematian.index') }}">Surat Keterangan Kematian</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('ahli_waris.index') }}">Surat Ahli Waris</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('pindah_keluar.index') }}">Surat Pindah Keluar</a>
                         </li>
                     </ul>
                 </div>
@@ -102,7 +111,7 @@ default => route('login')
                 <div class="collapse" id="sidebarArsip">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Lihat Arsip</a>
+                            <a class="sub-nav-link" href="{{ route('arsip.index')}}">Arsip Surat</a>
                         </li>
                     </ul>
                 </div>
@@ -111,14 +120,14 @@ default => route('login')
             @endif
 
             {{-- ==================== ADMIN, SEKRE & STAFF PELAYANAN ==================== --}}
-            @if(in_array($jabatan, ['administrator', 'sekre_lurah', 'staff_pelayanan']))
+            @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
 
             <li class="nav-item">
                 <a class="nav-link menu-arrow" href="#sidebarWarga" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarWarga">
                     <span class="nav-icon">
                         <iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon>
                     </span>
-                    <span class="nav-text"> Manajamen Warga </span>
+                    <span class="nav-text"> Manajemen Warga </span>
                 </a>
                 <div class="collapse" id="sidebarWarga">
                     <ul class="nav sub-navbar-nav">
@@ -131,35 +140,13 @@ default => route('login')
                         <li class="sub-nav-item">
                             <a class="sub-nav-link" href="{{ route('family.index') }}"> Keluarga </a>
                         </li>
-                        @if(in_array($jabatan, ['administrator', 'sekre_lurah']))
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Tambah Warga</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Import Warga</a>
-                        </li>
-                        @endif
                     </ul>
                 </div>
             </li>
 
             @endif
 
-            {{-- ==================== STAFF PELAYANAN ==================== --}}
-            @if($jabatan === 'staff_pelayanan')
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:file-add-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Buat Surat </span>
-                </a>
-            </li>
-
-            @endif
-
-            {{-- ==================== SEMUA ROLE ==================== --}}
+            @if(in_array($jabatan, ['administrator', 'kepala_lurah']))
             <li class="menu-title mt-2">Other</li>
 
             <li class="nav-item">
@@ -170,26 +157,7 @@ default => route('login')
                     <span class="nav-text"> Profil Kelurahan </span>
                 </a>
             </li>
-
-            <li class="menu-title mt-2">Support</li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:help-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Help Center </span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:question-circle-bold-duotone"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> FAQs </span>
-                </a>
-            </li>
+            @endif
 
         </ul>
     </div>
